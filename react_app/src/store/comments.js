@@ -25,62 +25,22 @@ const createCommentAction = (comment) => {
 }
 
 export const getCommentsThunk = () => async (dispatch) => {
-    const response = await fetch('/comments')
-    let comment_obj = await response.json()
-    let commentArr = comment_obj.comments
-    if (response.ok) {
-        dispatch(getCommentsAction(commentArr))
-    } else {
-        //error stuff
-    }
+    //GET ALL COMMENTS FROM THE DB
 }
 
 export const createCommentThunk = (comment) => async (dispatch) => {
-    let res = await fetch('/comments', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(comment)
-    })
-
-    if (res.ok) {
-        let comment = await res.json()
-        dispatch(createCommentAction(comment))
-    }
+    //POST A COMMENT TO THE DB
 }
 
 export const deleteCommentThunk = (id) => async (dispatch) => {
-    const response = await fetch(`/comments/${id}`, {
-        method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(id)
-    })
-    if (response.ok) {
-        dispatch(deleteCommentAction(id))
-    } else {
-        //error stuff
-    }
+    //DELETE A COMMENT FROM THE DB
 }
 
 
 const initialState = {
     comments: []
 }
+
 export default function commentsReducer(state = initialState, action) {
-    const newState = { ...state }
-    switch (action.type) {
-        case GET_COMMENTS:
-            return {
-                comments: action.payload
-            }
-        case CREATE_COMMENT:
-            newState.comments.push(action.payload)
-            return newState
-        case DELETE_COMMENT:
-            let comments = newState.comments.filter(comment => comment.id !== action.payload)
-            return {
-                comments
-            }
-        default:
-            return state
-    }
+
 }
