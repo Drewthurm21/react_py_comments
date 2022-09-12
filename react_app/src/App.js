@@ -11,21 +11,17 @@ function App() {
   const [commentText, setCommentText] = useState('')
 
   const handleDelete = (id) => {
-    dispatch(deleteCommentThunk(id))
+    //your code here
   }
 
   useEffect(() => {
-    dispatch(getCommentsThunk())
+    //your code here
   }, [dispatch])
 
 
   const submitComment = (e) => {
     e.preventDefault()
-    const comment = {
-      'user_name': 'Drew_T',
-      'body': commentText
-    }
-    dispatch(createCommentThunk(comment))
+    //your code here
   }
 
 
