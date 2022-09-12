@@ -36,7 +36,7 @@ export const getCommentsThunk = () => async (dispatch) => {
 }
 
 export const createCommentThunk = (comment) => async (dispatch) => {
-    let res = await fetch('/new', {
+    let res = await fetch('/comments', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(comment)
@@ -49,7 +49,11 @@ export const createCommentThunk = (comment) => async (dispatch) => {
 }
 
 export const deleteCommentThunk = (id) => async (dispatch) => {
-    const response = await fetch(`/delete/${id}`)
+    const response = await fetch(`/comments/${id}`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(id)
+    })
     if (response.ok) {
         dispatch(deleteCommentAction(id))
     } else {

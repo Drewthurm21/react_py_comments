@@ -34,23 +34,21 @@ def seed_route():
     
 @app.route('/comments')
 def commants_route():
-    comments = Comment.query.all()
+    comments = Comment.query.all() 
     return {
         'comments': [ comment.to_dict() for comment in comments ]
     }
 
-@app.route('/delete/<int:id>')
+@app.route('/comments/<int:id>', methods=['DELETE'])
 def delete(id):
-    print('hi')
-    deleted_comment = Comment.query.filter(Comment.id == id).first()
-    Comment.query.filter(Comment.id == id).delete()
+    deleted_comment = Comment.query.get(id)
+    db.session.delete(deleted_comment)
     db.session.commit()
-
     return {
         'deleted_comment': deleted_comment.to_dict()
     }
 
-@app.route('/new', methods=['POST'])
+@app.route('/comments', methods=['POST'])
 def create_comment():
     form = NewCommentForm()
     data = form.data
@@ -65,4 +63,6 @@ def create_comment():
         db.session.commit()
         return comment.to_dict()
     else:
-        return {'errors': form.errors }
+        return {
+            'errors': form.errors 
+        }
