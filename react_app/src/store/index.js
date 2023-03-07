@@ -3,7 +3,6 @@ import thunk from 'redux-thunk';
 import commentsReducer from './comments.js'
 const rootReducer = combineReducers({
     comments: commentsReducer,
-    
 });
 
 let enhancer;

@@ -1,3 +1,16 @@
+:root {
+  --customShadow: 0px 3px 1px -2px rgb(0 0 0 / 20%),
+    0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
+  --customBorder: 1px solid rgb(173, 173, 173);
+  --blandColor: #f5f5f5;
+}
+
+#root{
+  display:flex;
+  justify-content: center;
+  margin-top: 100px;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -12,8 +25,132 @@ code {
     monospace;
 }
 
-#root{
+input[type=textarea] {
+  display: block;
+  margin: 0 auto;
+  margin-top: 20px;
+  width: 370px;
+  height: 70px;
+  border: 1px solid #3628b3;
+  border-radius: 4px;
+  padding: 10px;
+  font-size: 20px;
+  font-family: "BenchNine", Arial, sans-serif;
+}
+
+input[type=text] {
+  display: block;
+  margin: 0 auto;
+  margin-top: 20px;
+  width: 120px;
+  height: 20px;
+  border: 1px solid #3628b3;
+  border-radius: 4px;
+  font-size: 16px;
+  font-family: "BenchNine", Arial, sans-serif;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  overflow: scroll;
+  margin: 30px;
+  height: 80vh;
+  width: 50vw;
+}
+
+.app-header {
+  top: 0;
+  background-color: #f5f5f5;
+  padding: 10px;
+  margin: 15px;
+  font-size: 2em;
+  font-weight: bold;
+  text-align: center;
+  border: 1px solid #ccc;
+  align-items: center;
+}
+
+.al-c { 
+  align-self:   center
+}
+
+.flx-c {
   display:flex;
+  flex-direction: column;
   justify-content: center;
-  margin-top: 100px
+  align-items: center;
+}
+
+.helper-btn {
+  text-align: center;
+  background-color: #3628b3;
+  padding: 10px;
+  border: 0px;
+  border-radius: 4px;
+  color: #fff;
+  font-family: "BenchNine", Arial, sans-serif;
+  font-size: 16px;
+  position:fixed;
+  top: 1rem;
+  right: 3rem;
+  text-transform: uppercase;
+  text-decoration: none;
+  height: 2rem;
+  width: 8rem;
+  margin: 2rem;
+}
+
+.comment-btn {
+  text-align: center;
+  background-color: #3628b3;
+  padding: 10px;
+  border: 0px;
+  border-radius: 4px;
+  color: #fff;
+  font-family: "BenchNine", Arial, sans-serif;
+  font-size: 16px;
+  position: relative;
+  text-transform: uppercase;
+  text-decoration: none;
+  height: 1rem;
+  width: 8rem;
+  margin: 2rem;
+}
+
+.single-comment {
+  margin: 15px;
+  padding: 10px;
+  border-radius: 5px;
+  border: var(--customBorder);
+  box-shadow: var(--customShadow);
+}
+
+.centered-container {
+  display: 'flex';
+  flex-direction: 'column';
+  justify-content: 'center';
+}
+
+.comments-header {
+  top: '0';
+  background-color: var(--blandColor);
+  padding: '10px';
+  margin: '0';
+  font-size: '2em';
+  font-weight: 'bold';
+  text-align: 'center';
+  color: 'rgb(255, 0, 179)';
+  text-shadow: 10px 10px 1px rgb(0, 255, 34),
+  -10px -12px 1px rgb(0, 255, 34),
+  -20px -22px 1px black, 
+  -30px -30px 1px rgb(255, 238, 0, 0.3)
+}
+
+.create-comment {
+  margin: 3rem;
+  padding: 3rem;
+  border: var(--customBorder);
+  background-color: var(--blandColor);
 }

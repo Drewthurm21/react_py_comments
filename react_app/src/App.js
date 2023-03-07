@@ -1,66 +1,47 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
-import { getCommentsThunk, deleteCommentThunk, createCommentThunk } from './store/comments.js'
+import { getCommentsThunk } from './store/comments.js'
+import { createCommentCard, pickRandomHelper } from './utils.js';
 import './App.css';
-
 
 function App() {
   const dispatch = useDispatch()
   const comments = useSelector(state => state.comments.comments)
 
   const [commentText, setCommentText] = useState('')
-
-  const handleDelete = (id) => {
-    //your code here
-  }
+  const [username, setUsername] = useState('')
 
   useEffect(() => {
-    //your code here
+    dispatch(getCommentsThunk())
   }, [dispatch])
 
-
-  const submitComment = (e) => {
-    e.preventDefault()
-    //your code here
-  }
-
-
   return (
-    <div style={centeredContainerStyle}>
-      <h1 style={articleH1Style}>Article</h1>
-      <div style={centeredContainerStyle}>
-        <div> Let's pretend this is an article about something we care deeply about.</div>
+    <div className='centered-container'>
+      <h1 className='app-header'>Article</h1>
+      <div className='flx-c'>
+        <div className='helper-btn al-c' onClick={pickRandomHelper}>PICK A RANDOM HELPER</div>
+        <div>We just wrote an article on something we care deeply about.</div>
+        <div>It's a really good article...  I promise!</div>
         <br></br>
-        <div> It's a really good article...  I promise!</div>
-        <br></br>
-        <div> {`Let's all share our thoughts in the comments section.  =]`}</div>
+        <div>Let's allow our users to share their thoughts in the comments section.  =]</div>
       </div>
-      <h3>Add your comment</h3>
-      <form onSubmit={submitComment} >
-        <label htmlFor='comment'>{`Add a comment here -------> > `}</label>
-        <input type='textarea' onChange={(e) => setCommentText(e.target.value)} value={commentText}></input>
-        <button>Add Comment</button>
-      </form>
+
+      <div className='create-comment'>
+        <h3 className='al-c'>Add your comment</h3>
+        <form className='flx-c' onSubmit={null} >
+          <label className='al-c'>Username</label>
+          <input type='text' required onChange={(e) => setUsername(e.target.value)} value={username}></input>
+          <label className='al-c'>comment</label>
+          <input type='textArea' required onChange={(e) => setCommentText(e.target.value)} value={commentText}></input>
+          <div className='comment-btn'>Add Comment</div>
+        </form>
+      </div>
+
       <br></br>
-      <div style={centeredContainerStyle}>
-        <h1 style={commentsH1Style}>COMMENTS</h1>
+      <div className='centered-container'>
+        <h1 className='comments-header'>COMMENTS</h1>
         <div className="App">
-          {Object.keys(comments)?.map(id => {
-            let comment = comments[id]
-            return (
-              <div key={comment.id} className='single-comment'>
-                <div>{comment.user_name}</div>
-                <div>{comment.id}</div>
-                <button
-                  className='delete-Button'
-                  onClick={() => handleDelete(comment.id)}
-                >
-                  Delete Me
-                </button>
-                <div>{comment.body}</div>
-              </div>
-            )
-          }).reverse()}
+          {Object.values(comments)?.map(comment => createCommentCard(comment)).reverse()}
         </div>
       </div>
     </div>
@@ -69,36 +50,3 @@ function App() {
 
 export default App;
 
-const commentsH1Style = {
-  position: 'sticky',
-  top: '0',
-  backgroundColor: '#f5f5f5',
-  padding: '10px',
-  margin: '0',
-  fontSize: '2em',
-  fontWeight: 'bold',
-  textAlign: 'center',
-  color: 'rgb(255, 0, 179)',
-  textShadow: `10px 10px 1px rgb(0, 255, 34),
-              -10px -12px 1px rgb(0, 255, 34),
-              -20px -22px 1px black, 
-              -30px -30px 1px rgb(255, 238, 0, 0.3)`,
-}
-
-const articleH1Style = {
-  position: 'sticky',
-  top: '0',
-  backgroundColor: '#f5f5f5',
-  padding: '10px',
-  margin: '0',
-  fontSize: '2em',
-  fontWeight: 'bold',
-  textAlign: 'center',
-  border: '1px solid #ccc'
-}
-
-const centeredContainerStyle = {
-  display: 'flex',
-  justifyContent: 'center',
-  flexDirection: 'column'
-}
