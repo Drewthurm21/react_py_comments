@@ -36,32 +36,16 @@ def seed_route():
 
 @app.route('/comments')
 def get_all_comments():
-        comments = Comment.query.all()
-        return { 'comments': [comment.to_dict() for comment in comments] }
+        return { comment.id: comment.to_dict() for comment in Comment.query.all() }
 
 
-@app.route('/comments/<int:id>', methods=['DELETE'])
+@app.route('/comments/<int:id>', methods=["DELETE"])
 def delete_comment(id):
     comment = Comment.query.get(id)
     db.session.delete(comment)
     db.session.commit()
     return { 'deleted': True }
-
-@app.route('/comments', methods=['POST'])
-def create_comment():
-    '''This route should create a new comment.'''
-    form = NewCommentForm()
-    data = form.data
-    form['csrf_token'].data = request.cookies['csrf_token']    
-    if form.validate_on_submit():
-        comment = Comment(
-            user_name=data['user_name'],
-            body=data['body']
-        )
-        db.session.add(comment)
-        db.session.commit()
-        return comment.to_dict()
-    return {'created': False}, 404
+# write a post route here!
 
 
 @app.route('/comments/<int:id>', methods=['PUT'])

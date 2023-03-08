@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
-import { getCommentsThunk } from './store/comments.js'
+import { getCommentsThunk, deleteCommentThunk } from './store/comments.js'
 import { createCommentCard, pickRandomHelper } from './utils.js';
 import './App.css';
 
 function App() {
   const dispatch = useDispatch()
-  const comments = useSelector(state => state.comments.comments)
+  const comments = useSelector(state => state.comments)
 
   const [commentText, setCommentText] = useState('')
   const [username, setUsername] = useState('')
@@ -14,6 +14,14 @@ function App() {
   useEffect(() => {
     dispatch(getCommentsThunk())
   }, [dispatch])
+
+  const handleDelete = (id) => {
+    dispatch(deleteCommentThunk(id))
+  }
+
+  let commentCards = Object.values(comments)?.map(comment => (
+    createCommentCard(comment, handleDelete))).reverse()
+
 
   return (
     <div className='centered-container'>
@@ -41,7 +49,7 @@ function App() {
       <div className='centered-container'>
         <h1 className='comments-header'>COMMENTS</h1>
         <div className="App">
-          {Object.values(comments)?.map(comment => createCommentCard(comment)).reverse()}
+          {commentCards}
         </div>
       </div>
     </div>

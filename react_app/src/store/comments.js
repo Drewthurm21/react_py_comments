@@ -9,30 +9,40 @@ const getCommentsAction = (commentsOject) => {
     }
 }
 
+const deleteCommentAction = (id) => {
+    return {
+        type: DELETE_COMMENT,
+        id
+    }
+}
+
 
 export const getCommentsThunk = () => async (dispatch) => {
     const res = await fetch('/comments')
 
     if (res.ok) {
         const comments = await res.json()
-        dispatch(getCommentsAction(comments.comments))
+        dispatch(getCommentsAction(comments))
     }
 }
 
+export const deleteCommentThunk = (id) => async (dispatch) => {
+    const res = await fetch(`/comments/${id}`, { method: 'DELETE', })
 
-const initialState = {
-    comments: []
+    if (res.ok) dispatch(deleteCommentAction(id))
 }
 
-export default function commentsReducer(state = initialState, action) {
+
+export default function commentsReducer(state = {}, action) {
     const newState = { ...state }
+
     switch (action.type) {
         case GET_COMMENTS:
-            newState.comments = action.payload
-            return newState
+            return {
+                ...action.payload
+            }
         case DELETE_COMMENT:
-            let comments = newState.comments.filter(comment => comment.id !== action.payload)
-            newState.comments = comments
+            delete newState[action.id]
             return newState
         default:
             return state

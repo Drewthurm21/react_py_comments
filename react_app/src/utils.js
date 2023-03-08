@@ -49,7 +49,8 @@ export const createCommentCard = (comment, clickCb) => (
   <div key={comment.id} className='single-comment'>
     <div>{comment.user_name}</div>
     <div>{comment.id}</div>
-    <button className='delete-Button' onClick={clickCb}>Delete Me</button>
+    <button className='delete-Button'
+      onClick={() => clickCb(comment.id)}>Delete Me</button>
     <div>{comment.body}</div>
   </div>
 )
