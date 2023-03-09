@@ -1,6 +1,6 @@
 const GET_COMMENTS = 'comments/LOAD'
 const DELETE_COMMENT = 'comment/DELETE'
-
+const ADD_COMMENT = 'comment/ADD'
 
 const getCommentsAction = (commentsOject) => {
     return {
@@ -13,6 +13,13 @@ const deleteCommentAction = (id) => {
     return {
         type: DELETE_COMMENT,
         id
+    }
+}
+
+const postCommentAction = (comment) => {
+    return {
+        type: ADD_COMMENT,
+        payload: comment
     }
 }
 
@@ -33,6 +40,20 @@ export const deleteCommentThunk = (id) => async (dispatch) => {
 }
 
 
+export const postCommentThunk = (comment) => async (dispatch) => {
+    const res = await fetch('/comments', {
+        method: 'POST',
+        headers: { 'Content-type': 'application/json' },
+        body: JSON.stringify(comment)
+    })
+
+    if (res.ok) {
+        let newComment = await res.json()
+        dispatch(postCommentAction(newComment))
+    }
+}
+
+
 export default function commentsReducer(state = {}, action) {
     const newState = { ...state }
 
@@ -40,6 +61,11 @@ export default function commentsReducer(state = {}, action) {
         case GET_COMMENTS:
             return {
                 ...action.payload
+            }
+        case ADD_COMMENT:
+            return {
+                ...state,
+                [action.payload.id]: action.payload
             }
         case DELETE_COMMENT:
             delete newState[action.id]

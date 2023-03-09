@@ -45,7 +45,23 @@ def delete_comment(id):
     db.session.delete(comment)
     db.session.commit()
     return { 'deleted': True }
-# write a post route here!
+
+
+@app.route('/comments', methods=['POST'])
+def post_comment():
+    form = NewCommentForm()
+    data = form.data
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        comment = Comment(
+            user_name=data['user_name'],
+            body=data['body']
+        )
+        db.session.add(comment)
+        db.session.commit()
+        return comment.to_dict()
+    return { 'errors': 'error' }
+
 
 
 @app.route('/comments/<int:id>', methods=['PUT'])

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
-import { getCommentsThunk, deleteCommentThunk } from './store/comments.js'
+import { getCommentsThunk, deleteCommentThunk, postCommentThunk } from './store/comments.js'
 import { createCommentCard, pickRandomHelper } from './utils.js';
 import './App.css';
 
@@ -23,6 +23,17 @@ function App() {
     createCommentCard(comment, handleDelete))).reverse()
 
 
+  const handleSubmit = (e) => {
+    e.preventDefault()
+
+    let newComment = {
+      user_name: username,
+      body: commentText
+    }
+
+    dispatch(postCommentThunk(newComment))
+  }
+
   return (
     <div className='centered-container'>
       <h1 className='app-header'>Article</h1>
@@ -36,12 +47,12 @@ function App() {
 
       <div className='create-comment'>
         <h3 className='al-c'>Add your comment</h3>
-        <form className='flx-c' onSubmit={null} >
+        <form className='flx-c'  >
           <label className='al-c'>Username</label>
           <input type='text' required onChange={(e) => setUsername(e.target.value)} value={username}></input>
           <label className='al-c'>comment</label>
           <input type='textArea' required onChange={(e) => setCommentText(e.target.value)} value={commentText}></input>
-          <div className='comment-btn'>Add Comment</div>
+          <div onClick={handleSubmit} className='comment-btn'>Add Comment</div>
         </form>
       </div>
 
